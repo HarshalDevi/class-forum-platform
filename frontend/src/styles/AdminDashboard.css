@@ -1,0 +1,112 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to right, #bfebf7, #97c3fa);
+  color: #444;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Main Admin Dashboard container */
+.admin-dashboard {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: white;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+}
+
+/* Logo and heading styling */
+.header-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #007BFF;
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-size: 32px;
+}
+
+/* Rich text editor styling */
+.admin-dashboard .ql-container {
+  height: 400px;
+  margin-bottom: 20px;
+  width: 800px;
+}
+
+.admin-dashboard .ql-editor {
+  min-height: 300px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* File input styling */
+input[type="file"] {
+  margin-top: 15px;
+  width: 100%;
+}
+
+/* Styling for the "Create a New Post" button */
+.post-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #007BFF;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin-top: 20px;
+}
+
+.post-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Styling for "Go to Feed" button */
+.feed-button {
+  display: block;
+  width: 96%;
+  text-align: center;
+  padding: 15px;
+  background-color: #28a745;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-top: 15px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.feed-button:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+label {
+  font-weight: bold;
+  color: #444;
+  display: block;
+  margin-bottom: 5px;
+}
+.header-container {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Space between logo and title */
+  margin-bottom: 20px;
+}
+
+.dashboard-logo {
+  width: 60px; /* Adjust size as needed */
+  height: auto;
+}

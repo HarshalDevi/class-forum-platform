@@ -1,0 +1,99 @@
+/* Post Container */
+.post {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Post Header */
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Edit Button */
+.edit-button {
+  padding: 8px 12px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.edit-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Edit Controls */
+.edit-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.save-edit-button, .cancel-edit-button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.save-edit-button {
+  background-color: #28a745; /* Green for save */
+  color: white;
+}
+
+.save-edit-button:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+.cancel-edit-button {
+  background-color: #ff6b6b; /* Red for cancel */
+  color: white;
+}
+
+.cancel-edit-button:hover {
+  background-color: #e55c50;
+  transform: scale(1.05);
+}
+
+/* Like Count */
+.like-count {
+  font-size: 16px;
+  color: #555;
+  margin-top: 15px;
+}
+
+/* Replies Section */
+.replies-section {
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+.reply {
+  margin-bottom: 10px;
+}
+
+.reply-timestamp {
+  font-size: 12px;
+  color: #888;
+  margin-top: 5px;
+  display: block;
+}

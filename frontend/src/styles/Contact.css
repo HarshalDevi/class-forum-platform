@@ -1,0 +1,39 @@
+.contact-page {
+    padding: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  .contact-page h2 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+  }
+  
+  .contact-info, .additional-info {
+    margin-top: 20px;
+  }
+  
+  .contact-info p, .additional-info p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  .contact-info h3, .additional-info h3 {
+    color: #0056b3;
+    margin-top: 20px;
+  }
+  .contact-header {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between logo and title */
+    margin-bottom: 20px;
+  }
+  
+  .contact-logo {
+    width: 60px; /* Adjust size as needed */
+    height: auto;
+  }
+  

@@ -1,0 +1,32 @@
+.pinned-posts {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #fff8dc; /* Light yellow for pinned posts */
+  border: 2px solid #007BFF; /* Changed to match the overall theme color */
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.pinned-posts h2 {
+  color: #007BFF; /* Changed to match the blue theme */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.pinned-post {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  color: #333;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.pinned-post:last-child {
+  border-bottom: none;
+}
+
+.pinned-post:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Subtle elevation on hover */
+}

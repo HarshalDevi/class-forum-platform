@@ -1,0 +1,159 @@
+/* Login and Register form containers */
+.login-container, .register-container {
+  max-width: 500px;
+  margin: 70px auto;
+  padding: 30px;
+  background-color: #ffffff; /* Keep containers white for good contrast */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow for card effect */
+  border-radius: 15px; /* Round corners for modern look */
+}
+
+/* Headers for the login and register pages */
+.login-container h2, .register-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #007BFF; /* Blue color to match buttons */
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* Input fields and select elements */
+input[type="email"], input[type="password"], input[type="text"], select {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Input focus styles */
+input:focus, select:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Blue glow effect */
+  outline: none;
+}
+
+/* Form button styling specific to auth pages */
+.auth-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #007BFF; /* Primary blue color */
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.auth-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05); /* Slight lift effect */
+}
+
+/* Error message styling */
+.error-message {
+  color: #e74c3c; /* Red for visibility */
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Link to switch between login/register */
+.create-account-link {
+  text-align: center;
+  margin-top: 15px;
+  color: #333;
+}
+
+.create-account-link a {
+  color: #007BFF; /* Blue for links */
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.create-account-link a:hover {
+  text-decoration: underline;
+}
+
+/* Style for logo in auth pages */
+.logo {
+  display: block;
+  margin: 0 auto 20px auto;
+  width: 150px;
+  height: auto;
+}
+
+/* Title section for logo and main title across pages */
+.title-container {
+  text-align: center;
+  margin-top: 5%;
+  margin-bottom: 20px;
+}
+
+.platform-title {
+  color: #000000; /* Black for contrast against blue gradient */
+  font-size: 42px; /* Larger font size for platform title */
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Shadow for better visibility */
+}
+
+/* Forgot Password Button Styling */
+.forgot-password-button {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 16px;
+  text-decoration: underline;
+}
+
+.forgot-password-button:hover {
+  text-decoration: none;
+}
+
+/* Reset Password Message */
+.reset-message {
+  color: green;
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Back to Login Button Styling */
+.back-to-login-button {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 16px;
+  text-decoration: underline;
+}
+
+.back-to-login-button:hover {
+  text-decoration: none;
+}
+
+/* Styling for Back to Login Link */
+.back-to-login-link {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Alignment for form fields and buttons */
+.form-field-container {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  font-size: 16px;
+  margin-bottom: 5px;
+  display: block;
+  color: #444;
+}
