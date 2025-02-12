@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/class-forum-platform/static/css/main.e050a911.css",
+    "main.js": "/class-forum-platform/static/js/main.e3e6c53a.js",
+    "index.html": "/class-forum-platform/index.html",
+    "main.e050a911.css.map": "/class-forum-platform/static/css/main.e050a911.css.map",
+    "main.e3e6c53a.js.map": "/class-forum-platform/static/js/main.e3e6c53a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e050a911.css",
+    "static/js/main.e3e6c53a.js"
+  ]
+}
