@@ -37,7 +37,7 @@ The **Class Forum Platform** is a web application designed for educational insti
 
 2. **Navigate to the frontend folder**:
    ```bash
-   cd Team 02/frontend
+   cd class-forum-platform/frontend
    ```
 
 3. **Install dependencies**:
