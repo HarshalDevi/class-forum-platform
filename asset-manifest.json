@@ -1,13 +1,14 @@
 {
   "files": {
-    "main.css": "/class-forum-platform/static/css/main.e050a911.css",
-    "main.js": "/class-forum-platform/static/js/main.e3e6c53a.js",
+    "main.css": "/class-forum-platform/static/css/main.204aaf5a.css",
+    "main.js": "/class-forum-platform/static/js/main.0d6b40e5.js",
+    "static/media/background.mp4": "/class-forum-platform/static/media/background.88fcb69a48e596f59853.mp4",
     "index.html": "/class-forum-platform/index.html",
-    "main.e050a911.css.map": "/class-forum-platform/static/css/main.e050a911.css.map",
-    "main.e3e6c53a.js.map": "/class-forum-platform/static/js/main.e3e6c53a.js.map"
+    "main.204aaf5a.css.map": "/class-forum-platform/static/css/main.204aaf5a.css.map",
+    "main.0d6b40e5.js.map": "/class-forum-platform/static/js/main.0d6b40e5.js.map"
   },
   "entrypoints": [
-    "static/css/main.e050a911.css",
-    "static/js/main.e3e6c53a.js"
+    "static/css/main.204aaf5a.css",
+    "static/js/main.0d6b40e5.js"
   ]
 }
