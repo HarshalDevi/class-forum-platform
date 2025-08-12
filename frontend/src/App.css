@@ -1,12 +1,16 @@
 /* General body settings for the whole app */
 body {
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to right, #bfebf7, #97c3fa); /* Blue gradient background for a vibrant look */
   color: #444;
   margin: 0;
   padding: 0;
   min-height: 100vh;
   display: block;
+}
+
+/* Apply the blue gradient everywhere EXCEPT the login page */
+body:not(.login-page) {
+  background: linear-gradient(to right, #bfebf7, #97c3fa);
 }
 
 /* Admin and student dashboard general styling */
@@ -70,4 +74,15 @@ body {
 .dashboard-logo {
   width: 60px;
   height: auto;
+}
+html.login-page,
+body.login-page,
+body.login-page #root,
+body.login-page .App,
+body.login-page main,
+body.login-page .app,
+body.login-page .auth-wrapper,
+body.login-page .login-container-wrapper {
+  background: transparent !important;
+  background-image: none !important;
 }

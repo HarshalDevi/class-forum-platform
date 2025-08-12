@@ -1,15 +1,32 @@
+/* One gradient for the whole page so there’s no seam */
 .admin-layout {
-    display: flex;
-    height: 100vh;
-  }
-  
-  .admin-sidebar {
-    width: 250px;
-  }
-  
+  --sidebar-width: 300px;              /* keep in one place */
+  min-height: 100vh;
+  display: flex;
+  background: linear-gradient(135deg, #cfeefd 0%, #a8c8fb 45%, #94b7fb 100%);
+  background-attachment: fixed;
+}
+
+/* Content simply shifts over by the sidebar width */
+.content {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  padding: 24px;
+  overflow-y: auto;
+  background: transparent;             /* ← no second background = no seam */
+  scroll-behavior: smooth;
+}
+
+/* Nice scrollbar (optional) */
+.content::-webkit-scrollbar { width: 10px; }
+.content::-webkit-scrollbar-thumb { background: rgba(0,0,0,.15); border-radius: 12px; }
+.content::-webkit-scrollbar-track { background: transparent; }
+
+/* Mobile: sidebar becomes top bar, content goes full width */
+@media (max-width: 860px) {
   .content {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
+    margin-left: 0;
+    padding: 16px;
+    background-attachment: scroll;
   }
-  
+}

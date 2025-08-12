@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { collection, query as firestoreQuery, onSnapshot, updateDoc, doc, orderBy } from 'firebase/firestore';
 import { db } from '../firebase/firebaseConfig';
 import Post from './Post';
-import SearchBar from './SearchBar';
 import StudentLayout from './StudentLayout';
 import '../styles/StudentDashboard.css';
 import logo from '../assets/logo.png';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const StudentDashboard = () => {
   const [posts, setPosts] = useState([]);
@@ -13,61 +13,104 @@ const StudentDashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    // Use 'timestamp' for ordering the posts by date
     const q = firestoreQuery(collection(db, 'posts'), orderBy('timestamp', 'desc'));
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const fetchedPosts = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        data: doc.data()
-      }));
-      const sortedPosts = sortPosts(fetchedPosts); // Sort posts with pinned posts first
-      setPosts(sortedPosts);
-      setFilteredPosts(sortedPosts);
+      const fetchedPosts = snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }));
+      const sorted = sortPosts(fetchedPosts);
+      setPosts(sorted);
+      setFilteredPosts(sorted);
     });
     return () => unsubscribe();
   }, []);
 
-  const sortPosts = (posts) => {
-    return [...posts].sort((a, b) => (b.data.pinned ? 1 : 0) - (a.data.pinned ? 1 : 0));
-  };
+  const sortPosts = (items) =>
+    [...items].sort((a, b) => (b.data.pinned ? 1 : 0) - (a.data.pinned ? 1 : 0));
 
-  const handleSearch = (searchQuery) => {
-    setSearchQuery(searchQuery);
+  const handleSearch = (value) => {
+    setSearchQuery(value);
+    const q = value.toLowerCase();
     const filtered = posts.filter((post) => {
-      const postContent = post.data.content ? post.data.content.toLowerCase() : '';
-      const queryLower = searchQuery.toLowerCase();
-      const isContentMatch = postContent.includes(queryLower);
-      const isReplyMatch = post.data.replies?.some((reply) =>
-        reply.content && reply.content.toLowerCase().includes(queryLower)
+      const content = (post.data.content || '').toLowerCase();
+      const inReplies = post.data.replies?.some(
+        (r) => r.content && r.content.toLowerCase().includes(q)
       );
-      return isContentMatch || isReplyMatch;
+      return content.includes(q) || inReplies;
     });
-    setFilteredPosts(sortPosts(filtered)); // Sort filtered posts
+    setFilteredPosts(sortPosts(filtered));
   };
 
   const togglePinPost = async (postId, isPinned) => {
-    const postRef = doc(db, 'posts', postId);
-    await updateDoc(postRef, { pinned: !isPinned });
+    await updateDoc(doc(db, 'posts', postId), { pinned: !isPinned });
   };
 
   return (
     <StudentLayout>
-      <div className="student-dashboard">
-        <div className="dashboard-header">
-          <img src={logo} alt="Class Forum Logo" className="dashboard-logo" />
-          <h2>Posts</h2>
+      <motion.div
+        className="student-dashboard glass"
+        initial={{ opacity: 0, y: 10, scale: 0.99 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+      >
+        {/* Header */}
+        <div className="s-header">
+          <img src={logo} alt="Class Forum" className="s-logo" />
+          <div>
+            <h2 className="s-title">Posts</h2>
+            <p className="s-caption">Browse updates, reply, and pin important items.</p>
+          </div>
         </div>
 
-        <SearchBar onSearch={handleSearch} />
+        {/* Search */}
+        <div className="s-search">
+          <div className="s-searchbox">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M21 21l-4.2-4.2M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z"
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <input
+              value={searchQuery}
+              onChange={(e) => handleSearch(e.target.value)}
+              placeholder="Search posts…"
+              aria-label="Search posts"
+            />
+          </div>
+          <motion.button
+            whileTap={{ scale: 0.98 }}
+            className="btn btn-primary"
+            onClick={() => handleSearch(searchQuery)}
+          >
+            Search
+          </motion.button>
+        </div>
 
+        {/* Posts */}
         {filteredPosts.length === 0 ? (
-          <p>No posts available.</p>
+          <div className="s-empty">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path d="M4 5h16M4 12h16M4 19h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+            <span>No posts yet. Try a different search.</span>
+          </div>
         ) : (
-          filteredPosts.map((post) => (
-            <Post key={post.id} post={post} onPinToggle={togglePinPost} />
-          ))
+          <div className="s-list">
+            <AnimatePresence initial={false}>
+              {filteredPosts.map((post, i) => (
+                <motion.div
+                  key={post.id}
+                  className="s-postcard"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.18, delay: Math.min(i, 6) * 0.02 }}
+                >
+                  {/* Keep your existing Post logic */}
+                  <Post post={post} onPinToggle={togglePinPost} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
         )}
-      </div>
+      </motion.div>
     </StudentLayout>
   );
 };

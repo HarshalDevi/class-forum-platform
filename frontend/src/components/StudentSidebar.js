@@ -22,138 +22,92 @@ const StudentSidebar = () => {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      if (user) {
-        try {
-          const userDoc = await getDoc(doc(db, 'users', user.uid));
-          if (userDoc.exists()) {
-            const data = userDoc.data();
-            setProfile({
-              firstName: data.firstName,
-              lastName: data.lastName,
-              email: data.email,
-              profilePicture: data.profilePicture || null,
-            });
-          }
-        } catch (error) {
-          console.error("Error fetching user profile:", error);
+      if (!user) return;
+      try {
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+          setProfile({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            profilePicture: data.profilePicture || null,
+          });
         }
+      } catch (e) {
+        console.error('Error fetching user profile:', e);
       }
     };
     fetchUserProfile();
   }, [user]);
 
   useEffect(() => {
-    // Fetch posts sorted by timestamp for notifications about new posts
+    // Latest posts as notifications
     const q = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const newPosts = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+    const unsub = onSnapshot(q, (snapshot) => {
+      const newPosts = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
       setNotifications(newPosts);
       setUnreadCount(newPosts.length);
     });
-
-    return () => unsubscribe();
+    return () => unsub();
   }, []);
 
   const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (file && user) {
-      try {
-        const fileRef = ref(storage, `profilePictures/${user.uid}`);
-        await uploadBytes(fileRef, file);
-        const fileURL = await getDownloadURL(fileRef);
-
-        const userRef = doc(db, 'users', user.uid);
-        await updateDoc(userRef, { profilePicture: fileURL });
-
-        setProfile((prevProfile) => ({
-          ...prevProfile,
-          profilePicture: fileURL,
-        }));
-      } catch (error) {
-        console.error("Error uploading profile picture:", error);
-      }
+    const file = e.target.files?.[0];
+    if (!file || !user) return;
+    try {
+      const fileRef = ref(storage, `profilePictures/${user.uid}`);
+      await uploadBytes(fileRef, file);
+      const url = await getDownloadURL(fileRef);
+      await updateDoc(doc(db, 'users', user.uid), { profilePicture: url });
+      setProfile((p) => ({ ...p, profilePicture: url }));
+    } catch (e) {
+      console.error('Error uploading profile picture:', e);
     }
   };
 
-  const handleNotificationClick = () => {
-    setShowNotification(true);
-    setUnreadCount(0);
-  };
-
-  const handleNotificationClose = () => {
-    setShowNotification(false);
-  };
+  const handleNotificationClick = () => { setShowNotification(true); setUnreadCount(0); };
+  const handleNotificationClose  = () => setShowNotification(false);
 
   const handleLogout = async () => {
-    try {
-      await auth.signOut();
-      navigate('/login');
-    } catch (error) {
-      console.error('Logout failed: ', error);
-    }
+    try { await auth.signOut(); navigate('/login'); }
+    catch (e) { console.error('Logout failed:', e); }
   };
 
-  const handleEditToggle = () => setIsEditing(!isEditing);
+  const handleEditToggle = () => setIsEditing((v) => !v);
 
   const handleSave = async () => {
-    if (user) {
-      try {
-        const userRef = doc(db, 'users', user.uid);
-        await updateDoc(userRef, {
-          firstName: profile.firstName,
-          lastName: profile.lastName,
-        });
-        setIsEditing(false);
-      } catch (error) {
-        console.error("Error updating profile:", error);
-      }
+    if (!user) return;
+    try {
+      await updateDoc(doc(db, 'users', user.uid), {
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+      });
+      setIsEditing(false);
+    } catch (e) {
+      console.error('Error updating profile:', e);
     }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setProfile((prevProfile) => ({
-      ...prevProfile,
-      [name]: value,
-    }));
+    setProfile((p) => ({ ...p, [name]: value }));
   };
 
   const getUserInitials = () => {
     const { firstName, lastName } = profile;
-    if (firstName && lastName) {
-      return `${firstName[0]}${lastName[0]}`.toUpperCase();
-    }
-    return '';
+    return firstName && lastName ? `${firstName[0]}${lastName[0]}`.toUpperCase() : '';
   };
 
   return (
-    <div className="student-sidebar">
+    <aside className="student-sidebar">
       <div className="profile-section">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-          style={{ display: 'none' }}
-          id="upload-picture"
-        />
-        <div 
-          htmlFor="upload-picture" 
-          className="profile-picture-container"
-          onClick={() => document.getElementById('upload-picture').click()}
-        >
+        <input id="upload-student-picture" type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
+        <div className="profile-picture-container" onClick={() => document.getElementById('upload-student-picture').click()}>
           {profile.profilePicture ? (
-            <img
-              src={profile.profilePicture}
-              alt="Profile"
-              className="profile-picture"
-            />
+            <img src={profile.profilePicture} alt="Profile" className="profile-picture" />
           ) : (
-            <div className="profile-initials">
-              {getUserInitials()}
-            </div>
+            <div className="profile-initials">{getUserInitials()}</div>
           )}
         </div>
 
@@ -161,53 +115,44 @@ const StudentSidebar = () => {
           {isEditing ? (
             <>
               <input
-                type="text"
-                name="firstName"
-                value={profile.firstName}
-                onChange={handleInputChange}
-                placeholder="First Name"
+                type="text" name="firstName" value={profile.firstName}
+                onChange={handleInputChange} placeholder="First Name"
               />
               <input
-                type="text"
-                name="lastName"
-                value={profile.lastName}
-                onChange={handleInputChange}
-                placeholder="Last Name"
+                type="text" name="lastName" value={profile.lastName}
+                onChange={handleInputChange} placeholder="Last Name"
               />
               <button className="savebutton" onClick={handleSave}>Save</button>
             </>
           ) : (
             <>
-              <h3 onClick={handleEditToggle}>
-                {profile.firstName} {profile.lastName}
-              </h3>
-              <p>{profile.email}</p>
+              <h3 onClick={handleEditToggle}>{profile.firstName} {profile.lastName}</h3>
+              <p className="muted">{profile.email}</p>
             </>
           )}
         </div>
       </div>
 
-      <div className="menu-links">
-        <button onClick={() => navigate('/student')}>Home</button>
-        <button onClick={() => navigate('/contact')}>Contact</button>
+      <nav className="menu-links">
+        <button onClick={() => navigate('/student')} className="nav-btn">Home</button>
+        <button onClick={() => navigate('/contact')} className="nav-btn">Contact</button>
 
-        <button onClick={handleNotificationClick} className="notification-button">
+        <button onClick={handleNotificationClick} className="nav-btn notification-button">
           Notifications
           {unreadCount > 0 && <span className="notification-indicator">{unreadCount}</span>}
         </button>
 
-        <button onClick={handleLogout} className="logout-button">Logout</button>
-      </div>
+        <button onClick={handleLogout} className="nav-btn logout-button">Logout</button>
+      </nav>
 
-      {/* Notification Component */}
       {showNotification && notifications.length > 0 && (
         <Notification
           messages={notifications}
           onClose={handleNotificationClose}
-          notificationType="New post" // Pass notification type for student
+          notificationType="New post"
         />
       )}
-    </div>
+    </aside>
   );
 };
 

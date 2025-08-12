@@ -10,6 +10,7 @@ import Contact from './components/Contact';
 import FeedPage from './components/FeedPage';
 import { auth, db } from './firebase/firebaseConfig';
 import './App.css';
+import './index.css';
 
 function App() {
   const [user, loading] = useAuthState(auth);
@@ -38,7 +39,6 @@ function App() {
     fetchUserRole();
   }, [user]);
 
-  // Handle redirection after login based on role
   useEffect(() => {
     if (!loading && !roleLoading) {
       if (user && role) {
@@ -53,8 +53,13 @@ function App() {
     }
   }, [user, role, loading, roleLoading, location.pathname, navigate]);
 
+  // ✅ Enhanced loading spinner
   if (loading || roleLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-blue-100">
+        <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
   }
 
   if (!user) {
@@ -86,7 +91,6 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        {/* Public Routes */}
         <Route path="/contact" element={<Contact />} />
 
         {/* Admin Routes */}

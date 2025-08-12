@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "description": "This project was bootstrapped with Create React App.",
   "main": "index.js",
+  "homepage": "https://HarshalDevi.github.io/class-forum-platform",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "test:e2e": "mocha tests/e2e/*.mjs --timeout 60000"
+    "test:e2e": "mocha tests/e2e/*.mjs --timeout 60000",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "ajv": "^8.17.1",
@@ -16,7 +19,9 @@
     "axios": "^1.7.7",
     "browserify-zlib": "^0.2.0",
     "crypto-browserify": "^3.12.1",
+    "dompurify": "^3.2.6",
     "firebase-admin": "^13.0.1",
+    "framer-motion": "^12.23.12",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
@@ -26,6 +31,7 @@
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.26.2",
     "react-scripts": "^5.0.1",
+    "react-toastify": "^11.0.5",
     "stream-browserify": "^3.0.0",
     "web-vitals": "^4.2.3"
   },
@@ -56,10 +62,16 @@
     "@babel/preset-env": "^7.26.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.0.1",
+    "autoprefixer": "^10.4.21",
     "babel-preset-react-app": "^10.0.1",
     "chai": "^5.1.2",
     "chromedriver": "^130.0.4",
     "mocha": "^10.8.2",
-    "selenium-webdriver": "^4.26.0"
+    "postcss": "^8.5.6",
+    "selenium-webdriver": "^4.26.0",
+    "tailwindcss": "^3.4.1"
+  },
+  "directories": {
+    "test": "tests"
   }
 }

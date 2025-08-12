@@ -1,15 +1,30 @@
-.student-layout {
-    display: flex;
-    height: 100vh;
+/* Match Admin layout: one shared gradient; content shifts by sidebar width */
+.student-layout{
+  --sidebar-width: 300px; /* keep in sync with StudentSidebar/AdminLayout */
+  min-height: 100vh;
+  display: flex;
+  background: linear-gradient(135deg, #cfeefd 0%, #a8c8fb 45%, #94b7fb 100%);
+  background-attachment: fixed;
+}
+
+.content{
+  flex:1;
+  margin-left: var(--sidebar-width);
+  padding: 24px;
+  overflow-y:auto;
+  background: transparent; /* avoids a visible seam next to the glassy sidebar */
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar niceties (optional) */
+.content::-webkit-scrollbar{ width:10px; }
+.content::-webkit-scrollbar-thumb{ background:rgba(0,0,0,.15); border-radius:12px; }
+
+/* Mobile: when sidebar collapses to the top */
+@media (max-width: 860px){
+  .content{
+    margin-left: 0;
+    padding: 16px;
+    background-attachment: scroll;
   }
-  
-  .student-sidebar {
-    width: 250px;
-  }
-  
-  .content {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-  }
-  
+}
