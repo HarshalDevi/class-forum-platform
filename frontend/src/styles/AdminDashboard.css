@@ -115,3 +115,53 @@
   }
   .suggestion-body { margin: 0 12px; }
 }
+
+/* === Attach File (label + hidden input) === */
+.file-input {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 6px 16px rgba(0,0,0,.06);
+  cursor: pointer;                /* <- pointer on label */
+  user-select: none;
+  transition: transform .08s ease, box-shadow .25s ease, background .2s ease, border-color .2s ease;
+}
+
+.file-input:hover {
+  transform: translateY(-1px);
+  border-color: #d1d5db;
+  box-shadow: 0 12px 28px rgba(0,0,0,.10);
+}
+
+.file-input:active {
+  transform: translateY(0);
+}
+
+/* Make the actual input cover the label and be clickable */
+.file-input input[type="file"] {
+  position: absolute;
+  inset: 0;           /* top:0; right:0; bottom:0; left:0 */
+  width: 100%;
+  height: 100%;
+  opacity: 0;         /* invisible but clickable */
+  cursor: pointer;    /* <- pointer on input too */
+}
+
+/* Text inside the label */
+.file-input > span {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* (Optional) Disabled look if you toggle a disabled state later */
+.file-input.is-disabled,
+.file-input[aria-disabled="true"] {
+  opacity: .6;
+  cursor: not-allowed;
+  pointer-events: none;
+}

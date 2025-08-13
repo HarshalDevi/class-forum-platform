@@ -124,9 +124,9 @@ const AdminDashboard = () => {
 
         <div className="actions-row">
           <label className="file-input">
-            <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-            <span>{file ? file.name : 'Attach a file'}</span>
-          </label>
+  <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+  📎 <span>{file ? file.name : 'Attach a file'}</span>
+</label>
 
           <div className="action-buttons">
             <motion.button whileTap={{ scale: 0.98 }} onClick={handlePost} className="btn btn-primary">

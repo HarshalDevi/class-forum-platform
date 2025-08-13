@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "This project was bootstrapped with Create React App.",
   "main": "index.js",
-  "homepage": "https://HarshalDevi.github.io/class-forum-platform",
+  "homepage": "https://harshaldevi.github.io/class-forum-platform",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -66,6 +66,7 @@
     "babel-preset-react-app": "^10.0.1",
     "chai": "^5.1.2",
     "chromedriver": "^130.0.4",
+    "gh-pages": "^6.3.0",
     "mocha": "^10.8.2",
     "postcss": "^8.5.6",
     "selenium-webdriver": "^4.26.0",

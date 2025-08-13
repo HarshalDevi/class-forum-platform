@@ -1,12 +1,44 @@
+/* =========================================================
+   Post.css — Modern card + motion + clean controls
+   ========================================================= */
+
+:root {
+  --bg-card: #ffffff;
+  --bg-soft: #f9fafb;
+  --border: #e5e7eb;
+  --text: #111827;
+  --muted: #6b7280;
+  --link: #1668ff;
+  --link-hover: #0f58df;
+  --accent: #1668ff;
+  --accent-2: #7c3aed;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warn: #f59e0b;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md: 0 6px 22px rgba(16, 104, 255, .10);
+  --shadow-lg: 0 16px 40px rgba(16, 104, 255, .12);
+}
+
+/* Smooth elevation on hover */
+@media (hover:hover) {
+  .post:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
 /* Post Container */
 .post {
   margin-bottom: 20px;
-  padding: 20px;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px 18px 16px;
+  background-color: var(--bg-card);
+  border: 1px solid rgba(229, 231, 235, .8);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
   position: relative;
+  transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
+  will-change: transform, box-shadow;
 }
 
 /* Post Header */
@@ -14,86 +46,196 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  gap: 12px;
 }
 
-/* Edit Button */
-.edit-button {
-  padding: 8px 12px;
-  background-color: #007BFF;
-  color: white;
-  border: none;
-  border-radius: 8px;
+.professor-name {
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: .2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.professor-name::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 0 0 3px rgba(22,104,255,.12);
+}
+
+/* Pin Button */
+.pin-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+  color: var(--muted);
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: transform .12s ease, box-shadow .2s ease, color .2s ease, border-color .2s ease, background .2s ease;
+  box-shadow: var(--shadow-sm);
+}
+.pin-button:hover { transform: translateY(-1px); color: var(--text); background: #fff; border-color: #d1d5db; }
+.pin-button.pinned {
+  color: #b45309;
+  background: #fff7ed;
+  border-color: #f59e0b;
+  box-shadow: 0 6px 18px rgba(245, 158, 11, .18);
+}
+
+/* Content */
+.post-content { color: var(--text); line-height: 1.6; font-size: 15.5px; }
+.post-content p { margin: 0 0 10px; }
+.post-content ul, .post-content ol { margin: 8px 0 12px 22px; }
+.post-content a { color: var(--link); text-decoration: none; border-bottom: 1px dashed rgba(22,104,255,.35); }
+.post-content a:hover { color: var(--link-hover); border-bottom-color: var(--link-hover); }
+
+/* Attachment link */
+.attached-file-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #eef4ff;
+  border: 1px solid #dbe7ff;
+  color: #0f3fb3;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform .12s ease, box-shadow .2s ease, background .2s ease;
+}
+.attached-file-link:hover { transform: translateY(-1px); background: #e6efff; box-shadow: var(--shadow-md); }
+
+/* Likes Section */
+.post-likes {
   display: flex;
   align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+.like-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+  color: var(--muted);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .2s ease, color .2s ease, border-color .2s ease, background .2s ease;
+  box-shadow: var(--shadow-sm);
+}
+.like-button:hover { transform: translateY(-1px); color: var(--accent); background: #fff; border-color: #d1d5db; }
+.like-button.liked {
+  color: #0ea5e9;
+  background: #f0f9ff;
+  border-color: #7dd3fc;
+  box-shadow: 0 8px 20px rgba(14,165,233,.2);
+  animation: pop .22s ease;
+}
+@keyframes pop { 0% { transform: scale(.92); } 100% { transform: scale(1); } }
+.like-count, .post-likes span { font-size: 14px; color: var(--muted); }
+
+/* Reply Editor (Quill) */
+.reply-editor { margin-top: 14px; }
+.reply-editor .ql-toolbar.ql-snow {
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  background: #fbfbfb;
+}
+.reply-editor .ql-container.ql-snow {
+  border: 1px solid var(--border);
+  border-radius: 0 0 12px 12px;
+  min-height: 110px;
 }
 
-.edit-button:hover {
-  background-color: #0056b3;
-  transform: scale(1.05);
-}
-
-/* Edit Controls */
-.edit-controls {
+/* Actions under the editor */
+.reply-actions {
   display: flex;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
 }
 
-.save-edit-button, .cancel-edit-button {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 8px;
+/* Improve + Reply buttons */
+.improve-button,
+.reply-button {
+  flex: 1 1 180px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  font-weight: 700;
+  letter-spacing: .2px;
   cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s, transform 0.2s;
-  display: flex;
-  align-items: center;
+  transition: transform .12s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease, filter .2s ease;
+  box-shadow: 0 6px 16px rgba(22,104,255,.12);
 }
 
-.save-edit-button {
-  background-color: #28a745; /* Green for save */
-  color: white;
+.improve-button {
+  background: linear-gradient(135deg, #7c3aed, #1668ff);
+  color: #fff;
 }
+.improve-button:hover { transform: translateY(-1px); filter: brightness(1.03); box-shadow: 0 10px 26px rgba(124,58,237,.28); }
+.improve-button:disabled { opacity: .65; cursor: not-allowed; }
 
-.save-edit-button:hover {
-  background-color: #218838;
-  transform: scale(1.05);
+.reply-button {
+  background: var(--accent);
+  color: #fff;
 }
-
-.cancel-edit-button {
-  background-color: #ff6b6b; /* Red for cancel */
-  color: white;
-}
-
-.cancel-edit-button:hover {
-  background-color: #e55c50;
-  transform: scale(1.05);
-}
-
-/* Like Count */
-.like-count {
-  font-size: 16px;
-  color: #555;
-  margin-top: 15px;
-}
+.reply-button:hover { transform: translateY(-1px); background: var(--link-hover); box-shadow: 0 10px 26px rgba(22,104,255,.30); }
+.reply-button:disabled { opacity: .65; cursor: not-allowed; }
 
 /* Replies Section */
 .replies-section {
-  margin-top: 20px;
-  border-top: 1px solid #ddd;
-  padding-top: 10px;
+  margin-top: 18px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
 }
-
+.replies-section h4 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .3px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
 .reply {
+  position: relative;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: linear-gradient(180deg, #fff, #fcfcff);
   margin-bottom: 10px;
+  box-shadow: var(--shadow-sm);
+}
+.reply-responder-name {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 6px;
+  margin-right: 8px;
+}
+.reply-timestamp {
+  display: inline-block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 6px;
 }
 
-.reply-timestamp {
-  font-size: 12px;
-  color: #888;
-  margin-top: 5px;
-  display: block;
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .post { padding: 14px; border-radius: 14px; }
+  .reply-editor .ql-container.ql-snow { min-height: 90px; }
 }
